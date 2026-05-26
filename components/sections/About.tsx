@@ -41,13 +41,35 @@ export default function About() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-premium">
-              <Image
-                src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop"
-                alt="About Ethan"
-                width={500}
-                height={600}
-                className="w-full h-full object-cover"
+            <div className="group relative w-full h-full rounded-2xl overflow-hidden shadow-premium cursor-pointer">
+              <motion.div
+                className="relative w-full h-full"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.4 }}
+              >
+                <Image
+                  src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop"
+                  alt="About Ethan"
+                  width={500}
+                  height={600}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+
+              {/* Overlay */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+
+              {/* Border */}
+              <motion.div
+                className="absolute inset-0 border-2 border-blue-300 rounded-2xl pointer-events-none"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
               />
             </div>
           </motion.div>
@@ -96,25 +118,49 @@ export default function About() {
         {/* Stats Grid */}
         <motion.div
           className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delayChildren: 0.1 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-100 shadow-soft hover:shadow-medium transition-all text-center"
-              initial={{ opacity: 0, y: 20 }}
+              className="group bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-100 shadow-soft hover:shadow-premium transition-all text-center relative overflow-hidden cursor-pointer"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)' }}
+              whileHover={{ y: -8 }}
             >
-              <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 mb-3">
+              {/* Background Gradient */}
+              <motion.div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-br from-blue-50/60 to-transparent transition-opacity duration-300 -z-10"
+              />
+
+              {/* Number */}
+              <motion.div
+                className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 mb-3 group-hover:from-blue-700 group-hover:to-blue-500 transition-all"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
                 <StatCounter value={stat.value} suffix={stat.suffix} />
-              </div>
-              <p className="text-sm text-gray-600 font-500">{stat.label}</p>
+              </motion.div>
+
+              {/* Label */}
+              <motion.p
+                className="text-sm text-gray-600 font-500 group-hover:text-gray-700 transition-colors"
+              >
+                {stat.label}
+              </motion.p>
+
+              {/* Border Animation */}
+              <motion.div
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-blue-600"
+                initial={{ width: 0 }}
+                whileHover={{ width: '100%' }}
+                transition={{ duration: 0.3 }}
+              />
             </motion.div>
           ))}
         </motion.div>

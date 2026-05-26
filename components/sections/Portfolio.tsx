@@ -80,15 +80,31 @@ export default function Portfolio() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <p className="text-sm font-600 text-blue-600 tracking-wide uppercase mb-4">
+          <motion.p
+            className="text-sm font-600 text-blue-600 tracking-wide uppercase mb-4"
+            animate={{ letterSpacing: ['0.1em', '0.15em', '0.1em'] }}
+            transition={{ duration: 3, repeat: Infinity }}
+          >
             Portfolio
-          </p>
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900">
+          </motion.p>
+          <motion.h2
+            className="text-5xl md:text-6xl font-bold text-gray-900 bg-clip-text bg-gradient-to-r from-gray-900 to-gray-700"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
             My Recent Works
-          </h2>
-          <p className="text-lg text-gray-600 mt-6 max-w-2xl">
+          </motion.h2>
+          <motion.p
+            className="text-lg text-gray-600 mt-6 max-w-2xl"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             A collection of projects reflecting process and problem-solving
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Grid */}
@@ -97,15 +113,21 @@ export default function Portfolio() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '-100px' }}
         >
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.05 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.08,
+                type: 'spring',
+                stiffness: 200,
+                damping: 20,
+              }}
+              viewport={{ once: true, margin: '-50px' }}
               className="group"
             >
               <PortfolioCard project={project} />

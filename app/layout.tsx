@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import CursorFollower from '@/components/CursorFollower'
+import ScrollProgress from '@/components/ScrollProgress'
+import ScrollToTop from '@/components/ScrollToTop'
 
 export const metadata: Metadata = {
   title: 'Ethan Miles - Digital Product Designer',
@@ -30,6 +33,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className="bg-white antialiased">
+        <ScrollProgress />
+        <CursorFollower />
+        <ScrollToTop />
         <Navigation />
         <main className="relative">
           {children}

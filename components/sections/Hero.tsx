@@ -1,39 +1,71 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
+import { useRef } from 'react'
 
 export default function Hero() {
+  const containerRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], [0, 100])
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
+      transition: { duration: 1, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   }
 
   return (
     <section
       id="home"
+      ref={containerRef}
       className="relative min-h-screen pt-20 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       {/* Background Elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-20 -mr-48 -mt-48"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-50 rounded-full blur-3xl opacity-30 -ml-40 -mb-40"></div>
-      </div>
+      <motion.div className="absolute inset-0 -z-10" style={{ y }}>
+        <motion.div
+          className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-20 -mr-48 -mt-48"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.2, 0.3, 0.2],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        <motion.div
+          className="absolute bottom-0 left-0 w-80 h-80 bg-blue-50 rounded-full blur-3xl opacity-30 -ml-40 -mb-40"
+          animate={{
+            scale: [1, 0.9, 1],
+            opacity: [0.3, 0.2, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 0.5,
+          }}
+        />
+      </motion.div>
 
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
@@ -67,17 +99,40 @@ export default function Hero() {
               Hello, I'm Ethan Miles, a Digital Product Designer passionate about creating exceptional digital experiences. I design intuitive interfaces and user-centric experiences that blend creativity, function, and innovation.
             </motion.p>
 
-            <motion.button
+            <motion.div
               variants={itemVariants}
-              className="btn-primary inline-flex items-center gap-2"
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(59, 130, 246, 0.3)' }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              className="inline-block"
             >
-              Let's Discuss
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </motion.button>
+              <motion.button
+                className="btn-primary inline-flex items-center gap-2 group relative overflow-hidden"
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.92 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                <motion.span
+                  className="absolute inset-0 bg-white opacity-0 group-hover:opacity-15"
+                  initial={false}
+                />
+                Let's Discuss
+                <motion.svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  animate={{ x: [0, 3, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  group-hover="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </motion.svg>
+              </motion.button>
+            </motion.div>
           </motion.div>
 
           {/* Center - Profile Image */}

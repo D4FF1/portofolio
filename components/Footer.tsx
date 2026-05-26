@@ -75,19 +75,44 @@ export default function Footer() {
         </motion.div>
 
         {/* Divider */}
-        <div className="border-t border-gray-800 pt-8">
+        <motion.div
+          className="border-t border-gray-800 pt-8"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-            <p>&copy; {currentYear} Ethan Miles. All rights reserved.</p>
+            <motion.p
+              whileHover={{ color: '#f3f4f6' }}
+              transition={{ duration: 0.3 }}
+            >
+              &copy; {currentYear} Ethan Miles. All rights reserved.
+            </motion.p>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Terms of Service
-              </a>
+              {['Privacy Policy', 'Terms of Service'].map((item, i) => (
+                <motion.a
+                  key={item}
+                  href="#"
+                  className="hover:text-white transition-colors relative group"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ color: '#fff', x: 2 }}
+                >
+                  {item}
+                  <motion.span
+                    className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-blue-400"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: '100%' }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.a>
+              ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </footer>
   )

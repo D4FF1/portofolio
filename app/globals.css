@@ -12,6 +12,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -19,6 +20,19 @@ body {
   color: #0f172a;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  pointer-events: none;
+  z-index: 100;
 }
 
 /* Smooth scrolling for all sections */
@@ -89,6 +103,31 @@ section {
 /* Cursor improvements */
 a, button {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Ripple effect for buttons */
+button {
+  overflow: hidden;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  pointer-events: none;
+}
+
+button:active::after {
+  width: 300px;
+  height: 300px;
 }
 
 /* Image loading optimization */
@@ -96,4 +135,34 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+  transition: opacity 0.3s ease-out;
+}
+
+img[loading="lazy"] {
+  opacity: 0.8;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* Smooth page transitions */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html {
+  animation: pageEnter 0.4s ease-out;
+}
+
+/* Text selection with style */
+::selection {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

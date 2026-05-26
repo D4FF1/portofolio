@@ -32,21 +32,41 @@ export default function CTA() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.button
-              className="btn-primary"
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(59, 130, 246, 0.3)' }}
-              whileTap={{ scale: 0.95 }}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="inline-block"
             >
-              Get in Touch
-            </motion.button>
+              <motion.button
+                className="btn-primary group relative overflow-hidden"
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.92 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                <motion.span
+                  className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20"
+                  initial={false}
+                />
+                <span className="relative">Get in Touch</span>
+              </motion.button>
+            </motion.div>
 
-            <motion.button
-              className="btn-outline"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="inline-block"
             >
-              View Portfolio
-            </motion.button>
+              <motion.button
+                className="btn-outline group relative overflow-hidden"
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.92 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                <motion.span
+                  className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 -z-10"
+                  initial={false}
+                />
+                <span className="relative">View Portfolio</span>
+              </motion.button>
+            </motion.div>
           </div>
 
           {/* Contact Info */}
@@ -57,28 +77,56 @@ export default function CTA() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div>
-              <p className="text-sm text-gray-600 mb-2">Email</p>
-              <a
-                href="mailto:hello@ethanmiles.design"
-                className="text-lg font-600 text-gray-900 hover:text-blue-600 transition-colors"
+            {[
+              {
+                label: 'Email',
+                value: 'hello@ethanmiles.design',
+                href: 'mailto:hello@ethanmiles.design',
+                icon: '✉️',
+              },
+              {
+                label: 'Phone',
+                value: '+1 (234) 567-890',
+                href: 'tel:+1234567890',
+                icon: '📱',
+              },
+              {
+                label: 'Location',
+                value: 'San Francisco, USA',
+                href: '#',
+                icon: '📍',
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="group cursor-pointer"
               >
-                hello@ethanmiles.design
-              </a>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 mb-2">Phone</p>
-              <a
-                href="tel:+1234567890"
-                className="text-lg font-600 text-gray-900 hover:text-blue-600 transition-colors"
-              >
-                +1 (234) 567-890
-              </a>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 mb-2">Location</p>
-              <p className="text-lg font-600 text-gray-900">San Francisco, USA</p>
-            </div>
+                <div className="text-3xl mb-2 transition-transform group-hover:scale-110 duration-300 inline-block">
+                  {item.icon}
+                </div>
+                <p className="text-sm text-gray-600 mb-2 group-hover:text-gray-700 transition-colors">
+                  {item.label}
+                </p>
+                <motion.a
+                  href={item.href}
+                  className="text-lg font-600 text-gray-900 hover:text-blue-600 transition-colors"
+                  whileHover={{ x: 4 }}
+                >
+                  {item.value}
+                </motion.a>
+                <motion.div
+                  className="h-0.5 mt-3 bg-gradient-to-r from-blue-400 to-blue-600"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: '100%' }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.div>
+            ))}
           </motion.div>
         </motion.div>
       </div>
